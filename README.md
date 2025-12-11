@@ -1,59 +1,19 @@
----
-library_name: transformers
-tags:
-- generated_from_trainer
-datasets:
-- leannmlindsey/GUE
-model-index:
-- name: DNABERT
-  results: []
----
 
-<!-- This model card has been generated automatically according to the information the Trainer had access to. You
-should probably proofread and complete it, then remove this comment. -->
+# DNABERT_2-Muon
 
-# DNABERT
+This model is a fork of [DNABERT-2](https://github.com/MAGICS-LAB/DNABERT_2/tree/main) with the option of using [Muon](https://kellerjordan.github.io/posts/muon/) as hidden layer weights optimizer.
 
-This model was trained from scratch on the leannmlindsey/GUE virus_species_40 dataset.
-It achieves the following results on the evaluation set:
-- eval_loss: 8.4762
-- eval_model_preparation_time: 0.0024
-- eval_accuracy: 0.0001
-- eval_runtime: 5.5231
-- eval_samples_per_second: 361.572
-- eval_steps_per_second: 22.632
-- step: 0
+It is trained from scratch on [GUE/virus_covid](https://huggingface.co/datasets/leannmlindsey/GUE/viewer/virus_covid). Final weights can be downloaded here.
 
-## Model description
+## How to run training yourself
+First, follow the official DNABERT-2 packages checklist. Then:
 
-More information needed
+```
+!pip install git+https://github.com/KellerJordan/Muon
+!pip uninstall triton -y # triton errors out
+```
 
-## Intended uses & limitations
-
-More information needed
-
-## Training and evaluation data
-
-More information needed
-
-## Training procedure
-
-### Training hyperparameters
-
-The following hyperparameters were used during training:
-- learning_rate: 3e-05
-- train_batch_size: 32
-- eval_batch_size: 16
-- seed: 42
-- optimizer: Use OptimizerNames.ADAMW_TORCH_FUSED with betas=(0.9,0.999) and epsilon=1e-08 and optimizer_args=No additional optimizer arguments
-- lr_scheduler_type: linear
-- lr_scheduler_warmup_steps: 50
-- num_epochs: 1.0
-- mixed_precision_training: Native AMP
-
-### Framework versions
-
-- Transformers 4.57.3
-- Pytorch 2.9.0+cu126
-- Datasets 4.0.0
-- Tokenizers 0.22.1
+Then, from one level above, run
+```
+python -m DNABERT.run_mlm DNABERT/args.json
+```
