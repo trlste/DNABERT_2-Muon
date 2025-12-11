@@ -1,39 +1,59 @@
 ---
-metrics:
-- matthews_correlation
-- f1
+library_name: transformers
 tags:
-- biology
-- medical
-- genomics
+- generated_from_trainer
+datasets:
+- leannmlindsey/GUE
+model-index:
+- name: DNABERT
+  results: []
 ---
-This is the official pre-trained model introduced in [DNABERT-2: Efficient Foundation Model and Benchmark For Multi-Species Genome
-](https://arxiv.org/pdf/2306.15006.pdf).
 
-We sincerely appreciate the MosaicML team for the [MosaicBERT](https://openreview.net/forum?id=5zipcfLC2Z) implementation, which serves as the base of DNABERT-2 development. 
+<!-- This model card has been generated automatically according to the information the Trainer had access to. You
+should probably proofread and complete it, then remove this comment. -->
 
-DNABERT-2 is a transformer-based genome foundation model trained on multi-species genome. 
+# DNABERT
 
-To load the model from huggingface:
-```
-import torch
-from transformers import AutoTokenizer, AutoModel
+This model was trained from scratch on the leannmlindsey/GUE virus_species_40 dataset.
+It achieves the following results on the evaluation set:
+- eval_loss: 8.4762
+- eval_model_preparation_time: 0.0024
+- eval_accuracy: 0.0001
+- eval_runtime: 5.5231
+- eval_samples_per_second: 361.572
+- eval_steps_per_second: 22.632
+- step: 0
 
-tokenizer = AutoTokenizer.from_pretrained("zhihan1996/DNABERT-2-117M", trust_remote_code=True)
-model = AutoModel.from_pretrained("zhihan1996/DNABERT-2-117M", trust_remote_code=True)
-```
+## Model description
 
-To calculate the embedding of a dna sequence
-```
-dna = "ACGTAGCATCGGATCTATCTATCGACACTTGGTTATCGATCTACGAGCATCTCGTTAGC"
-inputs = tokenizer(dna, return_tensors = 'pt')["input_ids"]
-hidden_states = model(inputs)[0] # [1, sequence_length, 768]
+More information needed
 
-# embedding with mean pooling
-embedding_mean = torch.mean(hidden_states[0], dim=0)
-print(embedding_mean.shape) # expect to be 768
+## Intended uses & limitations
 
-# embedding with max pooling
-embedding_max = torch.max(hidden_states[0], dim=0)[0]
-print(embedding_max.shape) # expect to be 768
-```
+More information needed
+
+## Training and evaluation data
+
+More information needed
+
+## Training procedure
+
+### Training hyperparameters
+
+The following hyperparameters were used during training:
+- learning_rate: 3e-05
+- train_batch_size: 32
+- eval_batch_size: 16
+- seed: 42
+- optimizer: Use OptimizerNames.ADAMW_TORCH_FUSED with betas=(0.9,0.999) and epsilon=1e-08 and optimizer_args=No additional optimizer arguments
+- lr_scheduler_type: linear
+- lr_scheduler_warmup_steps: 50
+- num_epochs: 1.0
+- mixed_precision_training: Native AMP
+
+### Framework versions
+
+- Transformers 4.57.3
+- Pytorch 2.9.0+cu126
+- Datasets 4.0.0
+- Tokenizers 0.22.1
